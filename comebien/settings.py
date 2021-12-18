@@ -13,6 +13,7 @@ import os
 import socket
 from pathlib import Path
 
+HOST = socket.gethostname()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-h*neb04&zhh(7b(_y9us39(h1&_y(8d(pw^a=_$p&@27_2m-$2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cb.infoloop.net']
 
 
 # Application definition
@@ -127,3 +128,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../comebien-media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEV_HOSTS = ['iMac-de-Leo.local', 'vl.local', ]
+DEV_HOST = HOST in DEV_HOSTS
+if DEV_HOST:
+    DEBUG = True
+    ALLOWED_HOSTS = ['*']
