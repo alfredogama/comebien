@@ -1,0 +1,56 @@
+*~
+*.orig
+*.pyc
+*.rej
+.installed.cfg
+__minitage__*
+bin/*
+.idea/
+develop-eggs
+downloads
+eggs
+log
+parts
+tmp
+.DS_Store
+.*swp
+__pycache__/
+*.py[cod]
+.Python
+venv/
+env/
+dist/./
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Django stuff:
+*.log
+*.pot
+
+# Sphinx documentation
+docs/_build/
+*.sql
+*.sqlite3
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
+# config visual code
+.vscode
+worspace.code-workspace
