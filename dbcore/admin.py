@@ -36,9 +36,6 @@ class FoodTypeAdmin(admin.ModelAdmin):
 @admin.register(FoodRegister)
 class FoodRegisterAdmin(admin.ModelAdmin):
 
-    def register_date(self, obj):
-        return obj.created_at.strftime("%Y-%m-%d %H:%M")
-
     def photo1_tag(self, obj):
         if obj.photo_1:
             return format_html('<img src="{}" width="150"/>'.format(obj.photo_1.url))
@@ -57,4 +54,4 @@ class FoodRegisterAdmin(admin.ModelAdmin):
         else:
             return ""
 
-    list_display = ('register_date', 'schedule', 'food_1', 'photo1_tag', 'food_2', 'photo2_tag', 'food_3', 'photo3_tag', 'family',)
+    list_display = ('created_at', 'schedule', 'food_1', 'photo1_tag', 'food_2', 'photo2_tag', 'food_3', 'photo3_tag', 'family',)
