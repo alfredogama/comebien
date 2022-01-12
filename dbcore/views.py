@@ -14,3 +14,18 @@ def home(request):
             'comidas': comidas,
         }
         return render(request, 'home.html', context)
+
+
+def homefilter(request, tipo):
+    if request.method == 'GET':
+        # Familia
+        familia = Family.objects.get(id=1)
+        #Registro de comidas!
+        comidas = FoodRegister.objects.filter(schedule=tipo).order_by('-created_at')
+
+        context = {
+            'familia': familia,
+            'comidas': comidas,
+        }
+        return render(request, 'home.html', context)
+

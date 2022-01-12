@@ -2,35 +2,44 @@
 {% load static %}
 {% load extrasvl %}
 {% block content %}
-    <h1 class="text-center">Familia: {{ familia.name }}</h1>
-    <table class="table tabla_comida">
-        <tr>
-            <th scope="col">Día</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Ho</th>
-            <th scope="col">Comida 1</th>
-            <th scope="col">Fotos 1</th>
-            <th scope="col">Comida 2</th>
-            <th scope="col">Fotos 2</th>
-        </tr>
-        {% for comida in comidas %}
+
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="{% url 'dbcore:home' %}DE" class="nav-link">Desayuno</a></li>
+                <li class="nav-item"><a href="{% url 'dbcore:home' %}AL" class="nav-link">Almuerzo</a></li>
+                <li class="nav-item"><a href="{% url 'dbcore:home' %}CO" class="nav-link">Comida</a></li>
+            </ul>
+        </header>
+
+        <h1 class="text-center">{{ familia.name }}</h1>
+        <table class="table tabla_comida">
             <tr>
-                <th scope="row">{{ comida.created_at|date:'w'|diadesemana }}</th>
-                <td>{{ comida.created_at|date:"d-m"}}</td>
-                <td>{{ comida.schedule }}</td>
-                <td>{% if comida.food_1 %}{{ comida.food_1 }}{% endif %}</td>
-                <td>
-                    {% if comida.photo_1 %}
-                        <img src="{{ comida.photo_1.url }}" width="80" alt="">
-                    {% endif %}
-                </td>
-                <td>{% if comida.food_2 %}{{ comida.food_2 }}{% endif %}</td>
-                <td>
-                    {% if comida.photo_2 %}
-                        <img src="{{ comida.photo_2.url }}" width="80" alt="">
-                    {% endif %}
-                </td>
+                <th scope="col">Día</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Ho</th>
+                <th scope="col">Comida 1</th>
+                <th scope="col">Fotos 1</th>
+                <th scope="col">Comida 2</th>
+                <th scope="col">Fotos 2</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for comida in comidas %}
+                <tr>
+                    <th scope="row">{{ comida.created_at|date:'w'|diadesemana }}</th>
+                    <td>{{ comida.created_at|date:"d-m"}}</td>
+                    <td>{{ comida.schedule }}</td>
+                    <td>{% if comida.food_1 %}{{ comida.food_1 }}{% endif %}</td>
+                    <td>
+                        {% if comida.photo_1 %}
+                            <img src="{{ comida.photo_1.url }}" width="80" alt="">
+                        {% endif %}
+                    </td>
+                    <td>{% if comida.food_2 %}{{ comida.food_2 }}{% endif %}</td>
+                    <td>
+                        {% if comida.photo_2 %}
+                            <img src="{{ comida.photo_2.url }}" width="80" alt="">
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
 {% endblock content %}
