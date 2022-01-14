@@ -26,7 +26,7 @@ class Food(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('-created_at', )
+        ordering = ('name', )
         verbose_name = 'Comida'
         verbose_name_plural = 'Comidas'
 

@@ -25,6 +25,7 @@ class FamilyAdmin(admin.ModelAdmin):
 
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
+    search_fields = ['name', ]
     list_display = ('name', 'photo', 'type', 'visible')
 
 
@@ -54,4 +55,6 @@ class FoodRegisterAdmin(admin.ModelAdmin):
         else:
             return ""
 
+    autocomplete_fields = ['food_1', 'food_2', 'food_3', ]
+    search_fields = ['name', ]
     list_display = ('created_at', 'schedule', 'food_1', 'photo1_tag', 'food_2', 'photo2_tag', 'food_3', 'photo3_tag', 'family',)
