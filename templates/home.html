@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% load static %}
 {% load extrasvl %}
 {% block content %}
@@ -28,13 +29,20 @@
                     <td>{% if comida.food_1 %}{{ comida.food_1 }}{% endif %}</td>
                     <td>
                         {% if comida.photo_1 %}
-                            <a href="{{ comida.photo_1.url }}" data-toggle="lightbox" data-caption="{{ comida.food_1 }}"><img src="{{ comida.photo_1.url }}" width="80" alt=""></a>
+                            <a href="{{ comida.photo_1.url }}" data-toggle="lightbox" data-caption="{{ comida.food_1 }}">
+                                {% thumbnail comida.photo_1 "x200" as im %}
+                                    <img src="{{ im.url }}" width="80" alt="">
+                                {% endthumbnail %}
+
+                            </a>
                         {% endif %}
                     </td>
                     <td>{% if comida.food_2 %}{{ comida.food_2 }}{% endif %}</td>
                     <td>
                         {% if comida.photo_2 %}
-                            <a href="{{ comida.photo_2.url }}" data-toggle="lightbox" data-caption="{{ comida.food_1 }}"><img src="{{ comida.photo_2.url }}" width="80" alt=""></a>
+                            <a href="{{ comida.photo_2.url }}" data-toggle="lightbox" data-caption="{{ comida.food_1 }}">
+                                <img src="{{ comida.photo_2.url }}" width="80" alt="">
+                            </a>
                         {% endif %}
                     </td>
                 </tr>
