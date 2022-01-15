@@ -1,8 +1,16 @@
-.tabla_comida tr {
-  font-size: 10px;
+.tabla_comida img {
+  width: 200px;
 }
-.tabla_comida th {
-  font-size: 10px;
+.tabla_comida tr, .tabla_comida th {
+  font-size: 18px;
+}
+@media (max-width: 599px) {
+  .tabla_comida tr, .tabla_comida th {
+    font-size: 10px;
+  }
+  .tabla_comida img {
+    width: 80px;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

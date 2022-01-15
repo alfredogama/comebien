@@ -15,7 +15,6 @@
         <table class="table tabla_comida">
             <tr>
                 <th scope="col">Día</th>
-                <th scope="col">Fecha</th>
                 <th scope="col">Ho</th>
                 <th scope="col">Comida 1</th>
                 <th scope="col">Fotos 1</th>
@@ -24,8 +23,7 @@
             </tr>
             {% for comida in comidas %}
                 <tr>
-                    <th scope="row">{{ comida.created_at|date:'w'|diadesemana }}</th>
-                    <td>{{ comida.created_at|date:"d-m"}}</td>
+                    <th scope="row">{{ comida.created_at|date:'w'|diadesemana }} {{ comida.created_at|date:"d"}}</th>
                     <td>{{ comida.schedule }}</td>
                     <td>{% if comida.food_1 %}{{ comida.food_1 }}{% endif %}</td>
                     <td>
