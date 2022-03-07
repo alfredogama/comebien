@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/planner.css' %}">
+</head>
+<body>
+<main>
+    <section>
+        {% for comida in comidas %}
+            {% if comida.photo_1 %}
+                <time datetime="{{ comida.created_at|date:'Y-m-d' }}" class="hidden">
+                    <a href=""><img src="{{ comida.photo_1.url }}" alt="">
+                        <span class="caldate">{{ comida.created_at|date:'d' }}</span>
+                        <span class="title">{{ comida.food_1 }}</span>
+                    </a>
+                </time>
+            {% else %}
+                <time datetime="{{ comida.created_at|date:'Y-m-d' }}" class="blank">
+                    <span class="caldate">{{ comida.created_at|date:'d' }}</span>
+                </time>
+            {% endif %}
+        {% endfor %}
+{#        <time datetime="2015-07-26" class="blank">#}
+{#            <span class="caldate">26</span>#}
+{#        </time>#}
+{#        <time datetime="2015-07-27" class="hidden">#}
+{#            <a href=""><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/svg-meetup-thumb.png" alt="">#}
+{#                <span class="caldate">27</span>#}
+{#                <span class="title">Interactive Imagemaps Presentation</span>#}
+{#            </a>#}
+{#        </time>#}
+    </section>
+</main>
+<script src="{% static 'js/scritps.js' %}"></script>
+</body>
+</html>

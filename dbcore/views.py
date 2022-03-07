@@ -29,3 +29,15 @@ def homefilter(request, tipo):
         }
         return render(request, 'home.html', context)
 
+
+def almuerzo(request):
+    if request.method == 'GET':
+        # Familia
+        familia = Family.objects.get(id=1)
+        #Registro de comidas!
+        comidas = FoodRegister.objects.filter(schedule='AL').order_by('-created_at')
+
+        context = {
+            'comidas': comidas,
+        }
+        return render(request, 'almuerzos.html', context)
