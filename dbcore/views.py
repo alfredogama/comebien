@@ -41,3 +41,28 @@ def almuerzo(request):
             'comidas': comidas,
         }
         return render(request, 'almuerzos.html', context)
+
+def desayuno(request):
+    if request.method == 'GET':
+        # Familia
+        familia = Family.objects.get(id=1)
+        #Registro de comidas!
+        comidas = FoodRegister.objects.filter(schedule='DE').order_by('-created_at')
+
+        context = {
+            'comidas': comidas,
+        }
+        return render(request, 'almuerzos.html', context)
+
+
+def comida(request):
+    if request.method == 'GET':
+        # Familia
+        familia = Family.objects.get(id=1)
+        #Registro de comidas!
+        comidas = FoodRegister.objects.filter(schedule='CO').order_by('-created_at')
+
+        context = {
+            'comidas': comidas,
+        }
+        return render(request, 'almuerzos.html', context)
