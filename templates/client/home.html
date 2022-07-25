@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <form action="">
+    {% csrf_token %}
+        <label for="start">Start date:</label>
+        <input type="date" id="created_at" name="created_at">
+        <label for="start">Comida:</label>
+        <select name="comida" id="comida">
+            {% for comida in comidas  %}
+                <option value="{{ comida.id }}">{{ comida.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+{% endblock content %}

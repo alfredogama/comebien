@@ -1,5 +1,7 @@
+import json
 from django.shortcuts import render
-from .models import FoodRegister, Family
+from .models import FoodRegister, Family, Food
+from django.http import HttpResponse
 
 
 def home(request):
@@ -66,3 +68,13 @@ def comida(request):
             'comidas': comidas,
         }
         return render(request, 'almuerzos.html', context)
+
+
+def demo(request):
+    if request.method == 'GET':
+        comidas = Food.objects.all().order_by('-name')
+        print(comidas)
+        context = {
+            'comidas': ['a','b'],
+        }
+        return HttpResponse(json.dumps(context), content_type = "application/json")
