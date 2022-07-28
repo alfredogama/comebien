@@ -15,6 +15,7 @@ class FoodRegiterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FoodRegister
+        photo_1 = serializers.ImageField(required=False, use_url=True)
         fields = ('id',
                   'created_at',
                   'food_1',
