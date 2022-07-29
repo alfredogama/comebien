@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-
+from django.contrib.auth.models import User
 
 class FoodType(models.Model):
     name = models.CharField(max_length=255)
@@ -49,6 +49,7 @@ class FoodRegister(models.Model):
         ('AL', 'Almuerzo'),
         ('CO', 'Comida'),
     )
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="food_register")
     created_at = models.DateTimeField(default=datetime.now)
     food_1 = models.ForeignKey(Food, related_name='food_1', on_delete=models.CASCADE)
     photo_1 = models.ImageField(upload_to='register', null=True, blank=True)
