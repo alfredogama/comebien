@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from dbcore.models import FoodRegister, Food
+from dbcore.models import FoodRegister, Food, FoodType
 from .serializers import DailyFoodSerializer, FoodSerializer, Family
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -21,7 +21,7 @@ class DailyFoodListCreateView(generics.CreateAPIView):
         serializer.save(owner=user, schedule=schedule, family=family)
 
 class FoodListView(generics.ListAPIView):
-    queryset = Food.objects.all()
+    queryset = Food.objects.all().order_by('name')
     serializer_class = FoodSerializer
 
 
@@ -32,3 +32,17 @@ class CustomLogoutView(APIView):
 
 
 obtain_auth_token = obtain_auth_token  # Just to silence linting warning
+
+
+class ComidaCreateView(generics.CreateAPIView):
+    queryset = Food.objects.all()
+    serializer_class = FoodSerializer
+
+    def perform_create(self, serializer):
+        type_food = FoodType.objects.get(id=1)
+        serializer.save(type=type_food)
+
+
+class ComidaRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Food.objects.all()
+    serializer_class = FoodSerializer

@@ -88,3 +88,8 @@ def registro(request):
 def ingresar(request):
     context = {}
     return render(request, 'login.html', context)
+
+
+def comida(request):
+    context = {}
+    return render(request, 'food.html', context)

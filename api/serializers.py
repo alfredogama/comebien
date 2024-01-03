@@ -12,4 +12,6 @@ class DailyFoodSerializer(serializers.ModelSerializer):
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
-        fields = '__all__'
+        fields = ['id', 'name']
+
+

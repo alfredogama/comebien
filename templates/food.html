@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Nuevo Tipo de Comida</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #foodForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="foodForm">
+        <h1>Nueva comida</h1>
+
+        <form id="formularioTipoComida" class="form-group">
+            <label for="nombreTipoComida">Nombre:</label>
+            <input type="text" id="nombreTipoComida" required>
+
+            <button type="submit">Agregar</button>
+        </form>
+
+        <div id="mensajeResultado" class="result-message"></div>
+    </div>
+
+    <script>
+        document.getElementById('formularioTipoComida').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const nombreTipoComida = document.getElementById('nombreTipoComida').value;
+
+            // Tu URL de API
+            const apiUrl = '/api/food/';
+
+            // Realizar la solicitud POST al API
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: nombreTipoComida,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Manejar la respuesta
+                document.getElementById('mensajeResultado').innerHTML = `
+                    <div class="success">Tipo de Comida agregado correctamente.</div>`;
+                // Puedes redirigir al usuario o realizar otras acciones según tus necesidades.
+            })
+            .catch(error => {
+                console.error('Error al agregar tipo de comida:', error);
+                document.getElementById('mensajeResultado').innerHTML = `
+                    <div class="error">Hubo un error al agregar el tipo de comida.</div>`;
+            });
+        });
+    </script>
+
+</body>
+</html>
