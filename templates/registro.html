@@ -1,0 +1,177 @@
+<!-- En tu archivo registrar_comida.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Comida</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #foodForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div id="foodForm">
+    <h1>Registrar Comida</h1>
+    <form>
+        <label for="food_1">Qué estas comiendo?:</label>
+        <select id="food_1" name="food_1" required>
+            <!-- Opciones de categorías se cargarán dinámicamente -->
+        </select>
+
+        <label for="photo">Foto (jpg):</label>
+        <input type="file" accept="image/jpeg" id="photo" name="photo" required>
+
+        <img id="previewImage" style="max-width: 300px; max-height: 300px; margin-top: 10px;" />
+        <p id="creationDate"></p>
+
+        <label for="dateTime">Fecha/Hora:</label>
+        <input type="datetime-local" id="dateTime" name="dateTime" required>
+
+        <button type="button" onclick="registrarComida()">Registrar</button>
+    </form>
+</div>
+
+<script>
+    const token = localStorage.getItem('token'); // o de donde sea que lo estés guardando
+
+    if (!token) {
+        // Redirigir al usuario al login
+        window.location.href = '/ingresar/';
+    }
+
+    window.onload = function() {
+        fetch('http://localhost:8000/api/foods/')
+            .then(response => response.json())
+            .then(data => {
+                var selectElement = document.getElementById('food_1');
+
+                // Agregar opciones al elemento de selección
+                data.forEach(category => {
+                    var option = document.createElement('option');
+                    option.value = category.id;
+                    option.textContent = category.name;
+                    selectElement.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener categorías:', error);
+            });
+    };
+
+    function registrarComida() {
+        {#var name = document.getElementById('name').value;#}
+        var food_1 = document.getElementById('food_1').value;
+        var photoInput = document.getElementById('photo');
+        var photo = photoInput.files[0];  // Obtener el archivo seleccionado
+        var dateTime = document.getElementById('dateTime').value;
+
+        // Crear FormData para enviar datos como formulario multipart
+        var formData = new FormData();
+        formData.append('food_1', food_1);
+        formData.append('photo_1', photo);
+        formData.append('created_at', dateTime);
+
+        // Enviar la solicitud POST a la API
+        fetch('http://localhost:8000/api/foodregister/', {
+            method: 'POST',
+             headers: {
+                'Authorization': `Token ${token}`,
+            },
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Registro exitoso:', data);
+            alert('Registro exitoso');
+        })
+        .catch(error => {
+            console.error('Error al registrar comida:', error);
+            alert('Error al registrar comida');
+        });
+    }
+    document.getElementById('photo').addEventListener('change', handleImageSelect);
+
+    function handleImageSelect(event) {
+        const input = event.target;
+        const previewImage = document.getElementById('previewImage');
+        const creationDateTimeInput = document.getElementById('dateTime');
+
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+            // Obtener la fecha/hora de creación de la imagen
+            const file = input.files[0];
+            const creationDate = new Date(file.lastModified);
+            const formattedCreationDate = creationDate.toISOString().slice(0, 16); // Formato yyyy-mm-ddThh:mm
+            creationDateTimeInput.value = formattedCreationDate;
+        }
+    }
+</script>
+
+</body>
+</html>

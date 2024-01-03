@@ -78,3 +78,13 @@ def demo(request):
             'comidas': ['a','b'],
         }
         return HttpResponse(json.dumps(context), content_type = "application/json")
+
+
+def registro(request):
+    context = {}
+    return render(request, 'registro.html', context)
+
+
+def ingresar(request):
+    context = {}
+    return render(request, 'login.html', context)
