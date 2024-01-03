@@ -98,7 +98,7 @@
     }
 
     window.onload = function() {
-        fetch('http://localhost:8000/api/foods/')
+        fetch('/api/foods/')
             .then(response => response.json())
             .then(data => {
                 var selectElement = document.getElementById('food_1');
@@ -130,7 +130,7 @@
         formData.append('created_at', dateTime);
 
         // Enviar la solicitud POST a la API
-        fetch('http://localhost:8000/api/foodregister/', {
+        fetch('/api/foodregister/', {
             method: 'POST',
              headers: {
                 'Authorization': `Token ${token}`,
