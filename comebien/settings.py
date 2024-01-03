@@ -69,6 +69,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",  # Reemplaza con la URL de tu aplicación frontend
+    "https://comebn.com",  # Reemplaza con la URL de tu aplicación frontend
 ]
 
 ROOT_URLCONF = 'comebien.urls'
