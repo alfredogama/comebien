@@ -119,14 +119,14 @@
     function registrarComida() {
         {#var name = document.getElementById('name').value;#}
         var food_1 = document.getElementById('food_1').value;
-        var photoInput = document.getElementById('photo');
-        var photo = photoInput.files[0];  // Obtener el archivo seleccionado
+        var photoInput = document.getElementById('previewImage'); //antes era photo
+        var photo = photoInput.src;  // Obtener ruta del archivo seleccionado
         var dateTime = document.getElementById('dateTime').value;
 
         // Crear FormData para enviar datos como formulario multipart
         var formData = new FormData();
         formData.append('food_1', food_1);
-        formData.append('photo_1', photo);
+        formData.append('photo_1', dataURItoBlob(photo), 'ramdon.jpg');
         formData.append('created_at', dateTime);
 
         // Enviar la solicitud POST a la API
@@ -159,7 +159,26 @@
             const reader = new FileReader();
 
             reader.onload = function (e) {
-                previewImage.src = e.target.result;
+                {#previewImage.src = e.target.result;#}
+                const image = new Image();
+                image.src = e.target.result;
+
+                image.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    // Redimensionar la imagen a 800x800
+                    const targetWidth = 800;
+                    const aspectRatio = image.width / image.height;
+                    const targetHeight = targetWidth / aspectRatio;
+
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    context.drawImage(image, 0, 0, targetWidth, targetHeight);
+
+                    // Comprimir la imagen
+                    const compressedDataURL = canvas.toDataURL('image/jpeg', 0.8); // 0.8 es la calidad (ajústala según tus necesidades)
+                    previewImage.src = compressedDataURL;
+                };
             };
 
             reader.readAsDataURL(input.files[0]);
@@ -170,6 +189,19 @@
             const formattedCreationDate = creationDate.toISOString().slice(0, 16); // Formato yyyy-mm-ddThh:mm
             creationDateTimeInput.value = formattedCreationDate;
         }
+    }
+    // Función para convertir data URI a Blob
+    function dataURItoBlob(dataURI) {
+        const byteString = atob(dataURI.split(',')[1]);
+        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ab], { type: mimeString });
     }
 </script>
 
