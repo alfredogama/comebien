@@ -82,7 +82,7 @@ def demo(request):
 
 def registro(request):
     context = {}
-    return render(request, 'registro.html', context)
+    return render(request, 'registro2.html', context)
 
 
 def ingresar(request):

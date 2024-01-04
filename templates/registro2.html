@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Crop</title>
+    <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #foodForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        #preview-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #previewImage {
+            width: 100%;
+            height: auto;
+        }
+
+        #save-button {
+            display: block;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="foodForm">
+        <h1>Registrar Comida</h1>
+        <form>
+            <label for="food_1">Qué estas comiendo?:</label>
+            <select id="food_1" name="food_1" required>
+                <!-- Opciones de categorías se cargarán dinámicamente -->
+            </select>
+
+            <label for="photo">Foto (jpg):</label>
+            <input type="file" accept="image/jpeg" id="photo" name="photo" required>
+
+{#            <img id="previewImage" style="max-width: 300px; max-height: 300px; margin-top: 10px;" />#}
+
+            <div id="preview-container">
+                <img id="previewImage" src="" alt="Preview">
+            </div>
+
+            <p id="creationDate"></p>
+
+            <label for="dateTime">Fecha/Hora:</label>
+            <input type="datetime-local" id="dateTime" name="dateTime" required>
+
+            <button id="save-button">Registrar</button>
+        </form>
+        <script>
+            const token = localStorage.getItem('token'); // o de donde sea que lo estés guardando
+
+            if (!token) {
+                // Redirigir al usuario al login
+                window.location.href = '/ingresar/';
+            }
+
+            window.onload = function() {
+                fetch('/api/foods/')
+                    .then(response => response.json())
+                    .then(data => {
+                        var selectElement = document.getElementById('food_1');
+
+                        // Agregar opciones al elemento de selección
+                        data.forEach(category => {
+                            var option = document.createElement('option');
+                            option.value = category.id;
+                            option.textContent = category.name;
+                            selectElement.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error al obtener categorías:', error);
+                    });
+            };
+        </script>
+        <script src="https://unpkg.com/cropperjs"></script>
+        <script src="https://unpkg.com/image-compressor.js"></script>
+        <script src="{% static 'js/app.js' %}"></script>
+    </div>
+</body>
+</html>
