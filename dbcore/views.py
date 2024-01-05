@@ -93,3 +93,8 @@ def ingresar(request):
 def comida(request):
     context = {}
     return render(request, 'food.html', context)
+
+
+def listado(request):
+    context = {}
+    return render(request, 'listado.html', context)

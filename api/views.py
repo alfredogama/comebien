@@ -1,11 +1,12 @@
 from rest_framework import generics, permissions
 from dbcore.models import FoodRegister, Food, FoodType
-from .serializers import DailyFoodSerializer, FoodSerializer, Family
+from .serializers import DailyFoodSerializer, FoodSerializer, Family, FoodRegisterSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authtoken.views import obtain_auth_token
+from .pagination import FoodPagination  # Importa el paginador personalizado
 
 
 class DailyFoodListCreateView(generics.CreateAPIView):
@@ -23,6 +24,12 @@ class DailyFoodListCreateView(generics.CreateAPIView):
 class FoodListView(generics.ListAPIView):
     queryset = Food.objects.all().order_by('name')
     serializer_class = FoodSerializer
+
+
+class FoodRegisterListView(generics.ListAPIView):
+    queryset = FoodRegister.objects.all().order_by('-created_at')
+    serializer_class = FoodRegisterSerializer
+    pagination_class = FoodPagination  # Usa el paginador personalizado
 
 
 class CustomLogoutView(APIView):

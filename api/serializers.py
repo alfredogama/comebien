@@ -15,3 +15,7 @@ class FoodSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class FoodRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FoodRegister
+        fields = '__all__'
