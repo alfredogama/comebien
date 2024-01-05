@@ -27,7 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const image = document.createElement('img');
         image.src = food.photo_1;
 
+        const foodName = document.createElement('div');
+        foodName.classList.add('food-name');
+        const fecha = new Date(food.created_at);
+        foodName.textContent = fecha.getDate();
+
         foodItem.appendChild(image);
+        foodItem.appendChild(foodName);
 
         return foodItem;
     };
