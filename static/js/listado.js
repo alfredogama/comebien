@@ -29,11 +29,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const foodName = document.createElement('div');
         foodName.classList.add('food-name');
+
+        var enlace = document.createElement("a");
+        enlace.href = `/editar/?id=${food.id}`;
         const fecha = new Date(food.created_at);
-        foodName.textContent = fecha.getDate();
+        enlace.textContent =  fecha.getDate();
+
+        // const fecha = new Date(food.created_at);
+        // foodName.textContent = fecha.getDate();
 
         foodItem.appendChild(image);
         foodItem.appendChild(foodName);
+        foodName.appendChild(enlace);
 
         return foodItem;
     };
