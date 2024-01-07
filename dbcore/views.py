@@ -98,3 +98,7 @@ def comida(request):
 def listado(request):
     context = {}
     return render(request, 'listado.html', context)
+
+def editar(request):
+    context = {}
+    return render(request, 'editar.html', context)

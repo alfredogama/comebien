@@ -38,7 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     quality: 0.8, // Puedes ajustar la calidad según tus necesidades
                     success(result) {
                         var formData = new FormData();
-                        const fileName = generateFileName();
+                        const newfileName = dateTime.replace("T", "_").replace(":", "-");
+                        const fileName = `archivo_${newfileName}.jpg`;
+
                         formData.append('food_1', food_1);
                         formData.append('created_at', dateTime);
                         formData.append('photo_1', result, fileName);

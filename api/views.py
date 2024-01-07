@@ -21,10 +21,6 @@ class DailyFoodListCreateView(generics.CreateAPIView):
         family = Family.objects.get(id=1)
         serializer.save(owner=user, schedule=schedule, family=family)
 
-class FoodListView(generics.ListAPIView):
-    queryset = Food.objects.all().order_by('name')
-    serializer_class = FoodSerializer
-
 
 class FoodRegisterListView(generics.ListAPIView):
     queryset = FoodRegister.objects.all().order_by('-created_at')
@@ -32,13 +28,42 @@ class FoodRegisterListView(generics.ListAPIView):
     pagination_class = FoodPagination  # Usa el paginador personalizado
 
 
+class FoodRegisterUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FoodRegister.objects.all()
+    serializer_class = FoodRegisterSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        # Recuperar la instancia de Comida a actualizar
+        instance = self.get_object()
+
+        # Generar un nuevo nombre aleatorio
+        user = self.request.user
+        schedule = "AL"
+        family = Family.objects.get(id=1)
+
+        # Actualizar el nombre de la Comida
+        instance.owner = user
+        instance.schedule = schedule
+        instance.family = family
+
+        # Resto de la lógica de actualización, similar al comportamiento predeterminado de DRF
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return Response(serializer.data)
+
+
+class FoodListView(generics.ListAPIView):
+    queryset = Food.objects.all().order_by('name')
+    serializer_class = FoodSerializer
+
+
 class CustomLogoutView(APIView):
     def post(self, request):
         request.auth.delete()
         return Response(status=status.HTTP_200_OK)
-
-
-obtain_auth_token = obtain_auth_token  # Just to silence linting warning
 
 
 class ComidaCreateView(generics.CreateAPIView):
@@ -53,3 +78,6 @@ class ComidaCreateView(generics.CreateAPIView):
 class ComidaRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
+
+
+obtain_auth_token = obtain_auth_token  # Just to silence linting warning
