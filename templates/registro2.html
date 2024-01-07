@@ -1,87 +1,9 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Crop</title>
-    <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        #foodForm {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-        #preview-container {
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-
-        #previewImage {
-            width: 100%;
-            height: auto;
-        }
-
-        #save-button {
-            display: block;
-            margin: 10px auto;
-        }
-    </style>
-</head>
-<body>
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'css/registro.css' %}">
+{% endblock estilos %}
+{% block content %}
     <div id="foodForm">
         <h1>Registrar Comida</h1>
         <form>
@@ -137,5 +59,4 @@
         <script src="https://unpkg.com/image-compressor.js"></script>
         <script src="{% static 'js/app.js' %}"></script>
     </div>
-</body>
-</html>
+{% endblock content %}
