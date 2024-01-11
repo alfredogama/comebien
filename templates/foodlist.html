@@ -10,7 +10,7 @@
 
   <script>
     // Fetch meals from the API
-    fetch('/api/foods')
+    fetch('/api/foodlist')
       .then(response => response.json())
       .then(meals => displayMeals(meals))
       .catch(error => console.error('Error fetching meals:', error));

@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions
 from dbcore.models import FoodRegister, Food, FoodType
-from .serializers import DailyFoodSerializer, FoodSerializer, Family, FoodRegisterSerializer
+from .serializers import DailyFoodSerializer, FoodSerializer, \
+    Family, FoodRegisterSerializer, FoodFullSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import status
@@ -59,6 +60,10 @@ class FoodListView(generics.ListAPIView):
     queryset = Food.objects.all().order_by('name')
     serializer_class = FoodSerializer
 
+
+class FoodFullListView(generics.ListAPIView):
+    queryset = Food.objects.all().order_by('name')
+    serializer_class = FoodFullSerializer
 
 class CustomLogoutView(APIView):
     def post(self, request):
