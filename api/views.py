@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authtoken.views import obtain_auth_token
 from .pagination import FoodPagination  # Importa el paginador personalizado
+from django.db.models import Count
 
 
 class DailyFoodListCreateView(generics.CreateAPIView):
@@ -72,6 +73,18 @@ class FoodCount(generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         count = Food.objects.count()
         return Response({'count': count}, status=status.HTTP_200_OK)
+
+
+class ComidaOcurrences(generics.ListAPIView):
+    serializer_class = FoodFullSerializer
+
+    def get_queryset(self):
+        # Utilizamos annotate para agregar un nuevo campo 'ocurrencias' que representa el conteo de comidas en RegistroComida
+        comidas = Food.objects.annotate(ocurrencias=Count('food_1'))
+
+        print(str(comidas.query))
+
+        return comidas
 
 
 class CustomLogoutView(APIView):

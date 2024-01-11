@@ -16,9 +16,12 @@ class FoodSerializer(serializers.ModelSerializer):
 
 
 class FoodFullSerializer(serializers.ModelSerializer):
+
+    ocurrencias = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Food
-        fields = '__all__'
+        fields = ['id', 'name', 'photo', 'ocurrencias']
 
 
 class FoodRegisterSerializer(serializers.ModelSerializer):

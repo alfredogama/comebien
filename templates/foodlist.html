@@ -9,7 +9,7 @@
 
   <script>
     // Fetch meals from the API
-    fetch('/api/foodlist')
+    fetch('/api/foodliststats')
       .then(response => response.json())
       .then(meals => displayMeals(meals))
       .catch(error => console.error('Error fetching meals:', error));
@@ -46,7 +46,7 @@
 
         const mealName = document.createElement('div');
         mealName.classList.add('meal-name');
-        mealName.textContent = meal.name;
+        mealName.textContent = meal.name + '(' + meal.ocurrencias + ')';
 
         mealCard.appendChild(mealImage);
         mealCard.appendChild(mealName);
