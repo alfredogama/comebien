@@ -25,6 +25,9 @@
 
     // Display meals in the HTML
     function displayMeals(meals) {
+      // Oderdenar de forma descendente
+      meals.sort((a, b) => b.ocurrencias - a.ocurrencias);
+
       const mealContainer = document.getElementById('mealContainer');
 
       meals.forEach(meal => {
