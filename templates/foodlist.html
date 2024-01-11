@@ -27,7 +27,7 @@
         mealImage.classList.add('meal-image');
 
         // Check if the image URL is blank or null
-        if (meal.image_url && meal.photo.trim() !== '') {
+        if (meal.photo && meal.photo.trim() !== '') {
           mealImage.src = meal.photo;
         } else {
           // Use a default square image if the URL is blank or null
