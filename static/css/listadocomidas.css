@@ -27,3 +27,7 @@
   font-size: 18px;
   color: #333;
 }
+#pageTitle {
+  margin: 65px 0 0 0;
+  text-align: center;
+}

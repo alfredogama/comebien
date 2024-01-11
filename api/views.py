@@ -65,6 +65,15 @@ class FoodFullListView(generics.ListAPIView):
     queryset = Food.objects.all().order_by('name')
     serializer_class = FoodFullSerializer
 
+
+class FoodCount(generics.RetrieveAPIView):
+    serializer_class = FoodFullSerializer
+
+    def get(self, request, *args, **kwargs):
+        count = Food.objects.count()
+        return Response({'count': count}, status=status.HTTP_200_OK)
+
+
 class CustomLogoutView(APIView):
     def post(self, request):
         request.auth.delete()

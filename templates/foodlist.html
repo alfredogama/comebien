@@ -4,9 +4,8 @@
     <link rel="stylesheet" href="{% static 'css/listadocomidas.css' %}">
 {% endblock %}
 {% block content %}
-  <h1>Mis Comidas</h1>
-
-  <div id="mealContainer"></div>
+    <h1 id="pageTitle">Mis Comida</h1>
+    <div id="mealContainer"></div>
 
   <script>
     // Fetch meals from the API
@@ -14,6 +13,15 @@
       .then(response => response.json())
       .then(meals => displayMeals(meals))
       .catch(error => console.error('Error fetching meals:', error));
+
+    fetch('/api/foodlist/count/')
+    .then(response => response.json())
+    .then(data => {
+      const mealCount = data.count;
+      document.getElementById('pageTitle').textContent = `Mis (${mealCount} comidas)`;
+    })
+    .catch(error => console.error('Error fetching meal count:', error));
+
 
     // Display meals in the HTML
     function displayMeals(meals) {
