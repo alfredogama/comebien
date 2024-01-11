@@ -28,7 +28,7 @@
 
         // Check if the image URL is blank or null
         if (meal.image_url && meal.image_url.trim() !== '') {
-          mealImage.src = meal.image_url;
+          mealImage.src = meal.photo;
         } else {
           // Use a default square image if the URL is blank or null
           mealImage.src = '{% static 'img/default.jpeg' %}'; // Replace with your default image URL
