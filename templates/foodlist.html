@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'css/listadocomidas.css' %}">
+{% endblock %}
+{% block content %}
+  <h1>Mis Comidas</h1>
+
+  <div id="mealContainer"></div>
+
+  <script>
+    // Fetch meals from the API
+    fetch('/api/foods')
+      .then(response => response.json())
+      .then(meals => displayMeals(meals))
+      .catch(error => console.error('Error fetching meals:', error));
+
+    // Display meals in the HTML
+    function displayMeals(meals) {
+      const mealContainer = document.getElementById('mealContainer');
+
+      meals.forEach(meal => {
+        const mealCard = document.createElement('div');
+        mealCard.classList.add('meal-card');
+
+        const mealImage = document.createElement('img');
+        mealImage.classList.add('meal-image');
+
+        // Check if the image URL is blank or null
+        if (meal.image_url && meal.image_url.trim() !== '') {
+          mealImage.src = meal.image_url;
+        } else {
+          // Use a default square image if the URL is blank or null
+          mealImage.src = '{% static 'img/default.jpeg' %}'; // Replace with your default image URL
+        }
+
+        mealImage.alt = meal.name;
+
+        const mealName = document.createElement('div');
+        mealName.classList.add('meal-name');
+        mealName.textContent = meal.name;
+
+        mealCard.appendChild(mealImage);
+        mealCard.appendChild(mealName);
+
+        mealContainer.appendChild(mealCard);
+      });
+    }
+  </script>
+{% endblock content %}

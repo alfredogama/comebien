@@ -102,3 +102,8 @@ def listado(request):
 def editar(request):
     context = {}
     return render(request, 'editar.html', context)
+
+
+def listacomidas(request):
+    context = {}
+    return render(request, 'foodlist.html', context)
