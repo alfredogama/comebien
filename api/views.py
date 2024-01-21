@@ -87,6 +87,20 @@ class ComidaOcurrences(generics.ListAPIView):
         return comidas
 
 
+class FiltroPorNombreComida(APIView):
+    #filter por usuario y por id detipo de comida.
+    def get(self, request, *args, **kwargs):
+        comida_id = self.kwargs.get('comida_id', None)
+
+        # Utiliza filter en lugar de get para obtener múltiples resultados
+        comidas = FoodRegister.objects.filter(food_1_id=comida_id).order_by('-created_at')
+
+        if comidas.exists():
+            serializer = FoodRegisterSerializer(comidas, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "Comida no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+
 class CustomLogoutView(APIView):
     def post(self, request):
         request.auth.delete()

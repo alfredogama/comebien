@@ -2,7 +2,8 @@ from django.urls import path
 from .views import DailyFoodListCreateView, FoodListView, \
     CustomLogoutView, ComidaRetrieveUpdateDestroyView, \
     ComidaCreateView, FoodRegisterListView, \
-    FoodRegisterUpdateDestroyView, FoodFullListView, FoodCount, ComidaOcurrences
+    FoodRegisterUpdateDestroyView, FoodFullListView, \
+    FoodCount, ComidaOcurrences, FiltroPorNombreComida
 from rest_framework.authtoken.views import obtain_auth_token
 
 
@@ -12,6 +13,7 @@ urlpatterns = [
     path('foodlist/', FoodFullListView.as_view(), name='foodlist'),
     path('foodliststats/', ComidaOcurrences.as_view(), name='foodliststats'),
     path('foodlist/count/', FoodCount.as_view(), name='meal-count'),
+    path('filterbyname/<int:comida_id>/', FiltroPorNombreComida.as_view(), name='filtropornombredecomida'),
 
     path('listado/', FoodRegisterListView.as_view(), name='seguimiento-comida-list'),
     path('food/', ComidaCreateView.as_view(), name='comida-create'),
