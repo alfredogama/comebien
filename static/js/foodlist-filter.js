@@ -62,20 +62,58 @@ function cargarLista() {
         const foodName = document.createElement('div');
         foodName.classList.add('meal-name');
 
+        const setPortada = document.createElement('div');
+        setPortada.classList.add('meal-name');
+
         var enlace = document.createElement("a");
         enlace.href = `/editar/?id=${food.id}`;
         const fecha = new Date(food.created_at);
         enlace.textContent =  formatearFecha(fecha);
 
+        var enlace2 = document.createElement("a");
+        enlace2.href = '#';
+        // enlace2.href = `/api/set-food-image/${food.id}/${comida_id}/`;
+        enlace2.onclick =  function () {
+            setPortadaImage(food.id,comida_id);
+        };
+        enlace2.textContent = "Portada";
+
+        function setPortadaImage(registro_food_id, food_id){
+            const url = `/api/set-food-image/${registro_food_id}/${food_id}/`;
+            const parametros = {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            };
+            fetch(url, parametros)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`Error de red: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                // Manejar la respuesta exitosa (si es necesario)
+                console.log('Respuesta exitosa:', data);
+              })
+              .catch(error => {
+                // Manejar errores de red o errores en la respuesta
+                console.error('Error:', error);
+              });
+        }
         // const fecha = new Date(food.created_at);
         // foodName.textContent = fecha.getDate();
 
         foodItem.appendChild(image);
         foodItem.appendChild(foodName);
         foodName.appendChild(enlace);
+        foodItem.appendChild(setPortada);
+        setPortada.appendChild(enlace2);
 
         return foodItem;
     };
+
     function formatearFecha(fecha) {
         // Obtener cadena en formato ISO (yyyy-mm-ddThh:mm:ss.sssZ)
         const isoString = fecha.toISOString();

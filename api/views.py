@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from dbcore.models import FoodRegister, Food, FoodType
 from .serializers import DailyFoodSerializer, FoodSerializer, \
-    Family, FoodRegisterSerializer, FoodFullSerializer
+    Family, FoodRegisterSerializer, FoodFullSerializer, FoodUpdateImageSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import status
@@ -119,6 +119,27 @@ class ComidaCreateView(generics.CreateAPIView):
 class ComidaRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
+
+
+class SetFoodImage(APIView):
+    def put(self, request, registro_comida_id, comida_id, *args, **kwargs):
+        try:
+            # Obtener la instancia de RegistroComida
+            registro_comida = FoodRegister.objects.get(id=registro_comida_id)
+
+            # Obtener la instancia de Comida vinculada al RegistroComida
+            comida = Food.objects.get(id=comida_id)
+
+            # Copiar la imagen de RegistroComida a Comida
+            comida.photo.save(registro_comida.photo_1.name, registro_comida.photo_1, save=False)
+            comida.save()
+
+            return Response({"mensaje": "Imagen de comida actualizada correctamente"}, status=status.HTTP_200_OK)
+        except FoodRegister.DoesNotExist:
+            return Response({"detalle": "Registro de comida no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        except Food.DoesNotExist:
+            return Response({"detalle": "Comida no encontrada en el registro especificado"},
+                            status=status.HTTP_404_NOT_FOUND)
 
 
 obtain_auth_token = obtain_auth_token  # Just to silence linting warning

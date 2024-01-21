@@ -1,9 +1,5 @@
 from django.urls import path
-from .views import DailyFoodListCreateView, FoodListView, \
-    CustomLogoutView, ComidaRetrieveUpdateDestroyView, \
-    ComidaCreateView, FoodRegisterListView, \
-    FoodRegisterUpdateDestroyView, FoodFullListView, \
-    FoodCount, ComidaOcurrences, FiltroPorNombreComida
+from .views import *
 from rest_framework.authtoken.views import obtain_auth_token
 
 
@@ -19,6 +15,10 @@ urlpatterns = [
     path('food/', ComidaCreateView.as_view(), name='comida-create'),
     path('foodregister/<int:pk>/editar', FoodRegisterUpdateDestroyView.as_view(),
          name='editar-registro'),
+    # Herramientas
+    path('set-food-image/<int:registro_comida_id>/<int:comida_id>/', SetFoodImage.as_view(),
+         name='comida-create'),
+
     # Rutas de autenticación
     path('login/', obtain_auth_token, name='api-token-auth'),
     path('logout/', CustomLogoutView.as_view(), name='api-logout'),
