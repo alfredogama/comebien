@@ -4,51 +4,7 @@
     <link rel="stylesheet" href="{% static 'css/listadocomidas.css' %}">
 {% endblock %}
 {% block content %}
-    <h1 id="pageTitle">Mis Comida</h1>
+    <h1 id="pageTitle">Filtro comida</h1>
     <div id="mealContainer"></div>
-
-  <script>
-    // Fetch meals from the API
-    fetch('api/filterbyname/xxxx')
-      .then(response => response.json())
-      .then(meals => displayMeals(meals))
-      .catch(error => console.error('Error fetching meals:', error));
-    .catch(error => console.error('Error fetching meal count:', error));
-
-
-    // Display meals in the HTML
-    function displayMeals(meals) {
-      // Oderdenar de forma descendente
-      meals.sort((a, b) => b.ocurrencias - a.ocurrencias);
-
-      const mealContainer = document.getElementById('mealContainer');
-
-      meals.forEach(meal => {
-        const mealCard = document.createElement('div');
-        mealCard.classList.add('meal-card');
-
-        const mealImage = document.createElement('img');
-        mealImage.classList.add('meal-image');
-
-        // Check if the image URL is blank or null
-        if (meal.photo && meal.photo.trim() !== '') {
-          mealImage.src = meal.photo;
-        } else {
-          // Use a default square image if the URL is blank or null
-          mealImage.src = '{% static 'img/default.jpeg' %}'; // Replace with your default image URL
-        }
-
-        mealImage.alt = meal.name;
-
-        const mealName = document.createElement('div');
-        mealName.classList.add('meal-name');
-        mealName.textContent = meal.name + '(' + meal.ocurrencias + ')';
-
-        mealCard.appendChild(mealImage);
-        mealCard.appendChild(mealName);
-
-        mealContainer.appendChild(mealCard);
-      });
-    }
-  </script>
+    <script src="{% static 'js/foodlist-filter.js' %}"></script>
 {% endblock content %}

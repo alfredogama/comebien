@@ -49,10 +49,15 @@
 
         const mealName = document.createElement('div');
         mealName.classList.add('meal-name');
-        mealName.textContent = meal.name + '(' + meal.ocurrencias + ')';
+
+        var enlace = document.createElement("a");
+        enlace.href = `/listacomidaspornombre/?id=${meal.id}`;
+
+        enlace.textContent =  meal.name + '(' + meal.ocurrencias + ')';
 
         mealCard.appendChild(mealImage);
         mealCard.appendChild(mealName);
+        mealName.appendChild(enlace);
 
         mealContainer.appendChild(mealCard);
       });

@@ -107,3 +107,8 @@ def editar(request):
 def listacomidas(request):
     context = {}
     return render(request, 'foodlist.html', context)
+
+
+def listacomidaspornombre(request):
+    context = {}
+    return render(request, 'foodlist-filter.html', context)
