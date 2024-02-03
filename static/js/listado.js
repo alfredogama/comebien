@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadMoreButton = document.getElementById('loadMore');
     let page = 1;
     let loading = false;
+    var diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
     const fetchFoods = async (pageNumber) => {
         try {
@@ -25,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         foodItem.classList.add('food-item');
 
         const image = document.createElement('img');
-        image.src = food.photo_1;
+        // image.src = food.photo_1;
+        image.src = food.foto_miniatura;
 
         const foodName = document.createElement('div');
         foodName.classList.add('food-name');
@@ -33,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var enlace = document.createElement("a");
         enlace.href = `/editar/?id=${food.id}`;
         const fecha = new Date(food.created_at);
-        enlace.textContent =  fecha.getDate();
+        enlace.textContent = diasSemana[fecha.getDay()] + " - " + fecha.getDate();
 
         // const fecha = new Date(food.created_at);
         // foodName.textContent = fecha.getDate();
