@@ -42,7 +42,7 @@ class FoodListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FoodRegister
-        fields = ['owner', 'created_at',
+        fields = ['id', 'owner', 'created_at',
                   'food_1', 'photo_1', 'foto_miniatura',
                   'schedule', 'family']
 

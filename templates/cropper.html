@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Croppie Example</title>
+    <!-- Incluir Croppie CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
+</head>
+<body>
+    <!-- Contenedor para la imagen y el área de recorte -->
+    <div id="croppie-container">
+        <div id="croppie-preview"></div>
+        <input type="file" id="upload" accept="image/*">
+        <button id="crop-button">Recortar</button>
+    </div>
+
+    <!-- Contenedor para mostrar la imagen resultante -->
+    <div>
+        <h2>Imagen Resultante:</h2>
+        <img id="result-image" src="" alt="Resultado del recorte">
+    </div>
+
+    <!-- Incluir Croppie JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+
+    <script>
+        // Función para manejar la carga de la imagen
+        function handleImageUpload(event) {
+            const file = event.target.files[0]; // Obtener el archivo de la entrada de archivo
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const imageUrl = event.target.result; // Obtener la URL de la imagen cargada
+
+                // Inicializar Croppie con la imagen cargada
+                const croppie = new Croppie(document.getElementById('croppie-preview'), {
+                    viewport: { width: 200, height: 200 }, // Definir el tamaño del área de recorte
+                    boundary: { width: 300, height: 300 } // Definir el tamaño del contenedor
+                });
+
+                croppie.bind({
+                    url: imageUrl // Vincular la imagen cargada a Croppie
+                });
+
+                // Manejar el clic del botón de recorte
+                document.getElementById('crop-button').addEventListener('click', function() {
+                    croppie.result('blob').then(function(blob) {
+                        // Crear una URL para representar el blob como una URL de datos
+                        const blobUrl = URL.createObjectURL(blob);
+
+                        // Mostrar la imagen resultante
+                        const resultImage = document.getElementById('result-image');
+                        resultImage.src = blobUrl;
+                    });
+                });
+            };
+
+            // Leer el archivo como una URL de datos
+            reader.readAsDataURL(file);
+        }
+
+        // Escuchar el cambio en el elemento de carga de archivos
+        document.getElementById('upload').addEventListener('change', handleImageUpload);
+    </script>
+</body>
+</html>

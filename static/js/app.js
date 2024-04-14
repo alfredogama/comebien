@@ -3,21 +3,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const preview = document.getElementById('previewImage');
     const saveButton = document.getElementById('save-button');
 
-    let cropper;
+    const previewCanvas = document.getElementById('previewCanvas');
 
-    inputImage.addEventListener('change', function (e) {
-        const file = e.target.files[0];
+    let croppie;
+
+    inputImage.addEventListener('change', function (event) {
+        const file = event.target.files[0];
 
         if (file) {
             const reader = new FileReader();
 
-            reader.onload = function (event) {
-                preview.src = event.target.result;
-                cropper = new Cropper(preview, {
-                    aspectRatio: 1, // Puedes ajustar esto según tus necesidades
-                    viewMode: 2,    // Puedes ajustar esto según tus necesidades
+            reader.onload = function(event) {
+                const imageUrl = event.target.result; // Obtener la URL de la imagen cargada
+
+                // Inicializar Croppie con la imagen cargada
+                croppie = new Croppie(preview, {
+                    viewport: { width: 200, height: 200 }, // Definir el tamaño del área de recorte
+                    boundary: { width: 300, height: 300 } // Definir el tamaño del contenedor
                 });
-            };
+
+                croppie.bind({
+                    url: imageUrl // Vincular la imagen cargada a Croppie
+                });
+            }
 
             reader.readAsDataURL(file);
         }
@@ -25,9 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     saveButton.addEventListener('click', function (e) {
         e.preventDefault();
-        if (cropper) {
-            const croppedCanvas = cropper.getCroppedCanvas();
-            const resizedCanvas = resizeImage(croppedCanvas, 1920, 1920);
+        let resizedCanvas;
+
+        if (croppie) {
+            croppie.result('rawcanvas').then(function(croppedCanvas) {
+                resizedCanvas = resizeImage(croppedCanvas, 1920, 1920);
+            });
 
             var food_1 = document.getElementById('food_1').value;
             var dateTime = document.getElementById('dateTime').value;

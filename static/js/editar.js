@@ -130,6 +130,7 @@ function resizeImage(canvas, maxWidth, maxHeight) {
 
 // Call the function to load data when the page loads
 document.addEventListener('DOMContentLoaded', function () {
+    inputImage = document.getElementById('photo');
     preview = document.getElementById('previewImage');
     dateTime = document.getElementById('dateTime');
     food_1 = document.getElementById('food_1');
@@ -189,6 +190,24 @@ document.addEventListener('DOMContentLoaded', function () {
             },'image/jpeg');
         } else {
             alert('Primero selecciona una imagen y realiza el recorte.');
+        }
+    });
+
+    inputImage.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                preview.src = event.target.result;
+                cropper = new Cropper(preview, {
+                    aspectRatio: 1, // Puedes ajustar esto según tus necesidades
+                    viewMode: 2,    // Puedes ajustar esto según tus necesidades
+                });
+            };
+
+            reader.readAsDataURL(file);
         }
     });
 });

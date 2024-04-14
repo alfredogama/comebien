@@ -112,3 +112,8 @@ def listacomidas(request):
 def listacomidaspornombre(request):
     context = {}
     return render(request, 'foodlist-filter.html', context)
+
+
+def demo(request):
+    context = {}
+    return render(request, 'cropper.html', context)
