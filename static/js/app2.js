@@ -30,8 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Inicializar Croppie con la imagen cargada
                 croppie = new Croppie(preview, {
                     viewport: { width: 200, height: 200 }, // Definir el tamaño del área de recorte
-                    boundary: { width: 300, height: 300 }, // Definir el tamaño del contenedor
-                    enableOrientation: true
+                    boundary: { width: 300, height: 300 } // Definir el tamaño del contenedor
                 });
 
                 croppie.bind({
