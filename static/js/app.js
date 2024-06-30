@@ -36,14 +36,12 @@ document.addEventListener('DOMContentLoaded', function () {
         let resizedCanvas;
 
         if (croppie) {
-            croppie.result('rawcanvas').then(function(croppedCanvas) {
-                resizedCanvas = resizeImage(croppedCanvas, 1920, 1920);
-            });
-
-            var food_1 = document.getElementById('food_1').value;
-            var dateTime = document.getElementById('dateTime').value;
-
-            resizedCanvas.toBlob(function (blob) {
+            croppie.result('canvas').then(function(croppedCanvas) {
+                 console.log(croppedCanvas);
+                 resizedCanvas = resizeImage(croppedCanvas, 1920, 1920);
+                 resizedCanvas.toBlob(function (blob) {
+                     var food_1 = document.getElementById('food_1').value;
+                     var dateTime = document.getElementById('dateTime').value;
 
                 new ImageCompressor(blob, {
                     quality: 0.8, // Puedes ajustar la calidad según tus necesidades
@@ -79,6 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
             },'image/jpeg');
+            });
+
         } else {
             alert('Primero selecciona una imagen y realiza el recorte.');
         }
