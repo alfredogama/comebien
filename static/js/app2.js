@@ -85,15 +85,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    rotateLeftButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        croppie.rotate(-90); // Rotar la imagen 90 grados a la izquierda
-    });
-
-    rotateRightButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        croppie.rotate(90); // Rotar la imagen 90 grados a la derecha
-    });
+    // rotateLeftButton.addEventListener('click', function (e) {
+    //     e.preventDefault();
+    //     croppie.rotate(-90); // Rotar la imagen 90 grados a la izquierda
+    // });
+    //
+    // rotateRightButton.addEventListener('click', function (e) {
+    //     e.preventDefault();
+    //     croppie.rotate(90); // Rotar la imagen 90 grados a la derecha
+    // });
 
     dateButton.addEventListener('click', function (e) {
         e.preventDefault();
