@@ -22,7 +22,11 @@
                 <img id="previewImage" src="" alt="Preview">
             </div>
 
-            <p id="creationDate"></p>
+            <div class="controls">
+                <button id="rotate-left" class="rotate-button">⟲</button>
+                <button id="rotate-right" class="rotate-button">⟳</button>
+                <button id="date-button" class="rotate-button">📅</button>
+            </div>
 
             <label for="dateTime">Fecha/Hora:</label>
             <input type="datetime-local" id="dateTime" name="dateTime" required>
@@ -57,6 +61,7 @@
                     });
             };
         </script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
         <script src="https://unpkg.com/image-compressor.js"></script>
         <script src="{% static 'js/app2.js' %}"></script>
