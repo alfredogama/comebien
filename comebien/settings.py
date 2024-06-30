@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h*neb04&zhh(7b(_y9us39(h1&_y(8d(pw^a=_$p&@27_2m-$2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['cb.infoloop.net', 'comebn.com',]
 
@@ -66,6 +66,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     # 'rest_framework.middleware.AuthenticationMiddleware',
 ]
+
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",  # Reemplaza con la URL de tu aplicación frontend
