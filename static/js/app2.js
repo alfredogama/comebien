@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'blob',      // Tipo de salida: blob
             size: { width: 1920, height: 1920 }, // Nuevas dimensiones
             format: 'jpeg',    // Formato de la imagen: jpeg
-            quality: 1         // Calidad de la imagen (0 a 1)
+            quality: 0.8         // Calidad de la imagen (0 a 1)
         }).then(function (blob) {
             // Crear un objeto FormData para enviar la imagen a la API
             const formData = new FormData();
