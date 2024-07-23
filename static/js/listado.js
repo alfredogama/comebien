@@ -55,7 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!loading) {
             loading = true;
             page += 1;
-            fetchFoods(page);
+            const year = document.getElementById('year').value;
+            const month = document.getElementById('month').value;
+            fetchFoods(page, year, month);
         }
     };
 
