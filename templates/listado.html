@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block estilos %}
-    <link rel="stylesheet" href="{% static 'css/listado.css' %}">
+    <link rel="stylesheet" href="{% static 'css/listado.css' %}?v=1">
 {% endblock estilos %}
 {% block content %}
     <div class="filter">
@@ -34,6 +34,6 @@
 
     <div id="container"></div>
     <button id="loadMore">Load More</button>
-    <script src="{% static 'js/listado.js' %}"></script>
+    <script src="{% static 'js/listado.js' %}?v=1"></script>
 
 {% endblock content %}
