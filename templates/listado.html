@@ -4,7 +4,36 @@
     <link rel="stylesheet" href="{% static 'css/listado.css' %}">
 {% endblock estilos %}
 {% block content %}
+    <div class="filter">
+        <label for="year">Año:</label>
+        <select id="year">
+            <option value="">Selecciona el año</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+        </select>
+        <label for="month">Mes:</label>
+        <select id="month">
+            <option value="">Selecciona el mes</option>
+            <option value="1">Enero</option>
+            <option value="2">Febrero</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Mayo</option>
+            <option value="6">Junio</option>
+            <option value="7">Julio</option>
+            <option value="8">Agosto</option>
+            <option value="9">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
+
+        <button id="filterButton">Filtrar</button>
+    </div>
+
     <div id="container"></div>
     <button id="loadMore">Load More</button>
     <script src="{% static 'js/listado.js' %}"></script>
+
 {% endblock content %}

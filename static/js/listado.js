@@ -5,9 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let loading = false;
     var diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-    const fetchFoods = async (pageNumber) => {
+    const fetchFoods = async (pageNumber, year = '', month = '') => {
         try {
-            const response = await fetch(`/api/listado/?page=${pageNumber}`);
+            let url = `/api/listado/?page=${pageNumber}`;
+            if (year) {
+                url += `&year=${year}`;
+            }
+            if (month) {
+                url += `&month=${month}`;
+            }
+
+            const response = await fetch(url);
             const data = await response.json();
 
             data.results.forEach(food => {
@@ -26,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
         foodItem.classList.add('food-item');
 
         const image = document.createElement('img');
-        // image.src = food.photo_1;
         image.src = food.foto_miniatura;
 
         const foodName = document.createElement('div');
@@ -36,9 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         enlace.href = `/editar/?id=${food.id}`;
         const fecha = new Date(food.created_at);
         enlace.textContent = diasSemana[fecha.getDay()] + " - " + fecha.getDate();
-
-        // const fecha = new Date(food.created_at);
-        // foodName.textContent = fecha.getDate();
 
         foodItem.appendChild(image);
         foodItem.appendChild(foodName);
@@ -65,4 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial load
     fetchFoods(page);
+
+    document.getElementById('filterButton').addEventListener('click', function() {
+        const year = document.getElementById('year').value;
+        const month = document.getElementById('month').value;
+        page = 1;
+        container.innerHTML = '';  // Limpiar el contenedor antes de cargar los datos filtrados
+        fetchFoods(page, year, month);
+    });
 });

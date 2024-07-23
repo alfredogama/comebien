@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.views import obtain_auth_token
 from .pagination import FoodPagination  # Importa el paginador personalizado
 from django.db.models import Count
+from django_filters import rest_framework as filters
 
 
 class DailyFoodListCreateView(generics.CreateAPIView):
@@ -24,10 +25,20 @@ class DailyFoodListCreateView(generics.CreateAPIView):
         serializer.save(owner=user, schedule=schedule, family=family)
 
 
+class FoodRegisterFilter(filters.FilterSet):
+    year = filters.NumberFilter(field_name='created_at', lookup_expr='year')
+    month = filters.NumberFilter(field_name='created_at', lookup_expr='month')
+
+    class Meta:
+        model = FoodRegister
+        fields = ['year', 'month']
+
+
 class FoodRegisterListView(generics.ListAPIView):
     queryset = FoodRegister.objects.all().order_by('-created_at')
     serializer_class = FoodListSerializer
     pagination_class = FoodPagination  # Usa el paginador personalizado
+    filterset_class = FoodRegisterFilter
 
 
 class FoodRegisterUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
@@ -100,6 +111,7 @@ class FiltroPorNombreComida(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({"detail": "Comida no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+
 
 class CustomLogoutView(APIView):
     def post(self, request):
